@@ -1,0 +1,19 @@
+name: DeathAnimation
+description: Spawns a virtual player that imitate the real player dead animation.
+author: Rejomy
+version: 1
+
+# I dont know why the fuck it doesnt working, but i just keep it commented.
+#depend:
+#  - PacketEvents
+
+# Load our plugin after these plugins, to avoid config errors about enabled worlds.
+softdepend: [
+  MultiWorld,
+  Multiverse-Core,
+  My_Worlds
+]
+
+load: POSTWORLD
+api-version: 1.13
+main: me.rejomy.deathanimation.Main

@@ -1,0 +1,18 @@
+#
+# This plugin only create the "Dead" effect.
+# I won`t make PlayerSimulation for simulate the hit trajectory or imitate the real player.
+#   so do not ask about it.
+#
+
+# The plugin will work only in worlds below.
+enabled-worlds:
+  - world
+  - world_the_end
+  - world_nether
+
+# Entities in this range in blocks will receive the animation packets.
+max-distance-to-entity: 50
+# How much ticks we should wait before remove the entity.
+remove-entity-ticks: 15
+# Should we copy entity equipment
+copy-entity-equipment: true
