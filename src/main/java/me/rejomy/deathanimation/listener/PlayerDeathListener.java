@@ -1,5 +1,6 @@
 package me.rejomy.deathanimation.listener;
 
+import com.github.retrooper.packetevents.protocol.player.User;
 import lombok.RequiredArgsConstructor;
 import me.rejomy.deathanimation.Main;
 import me.rejomy.deathanimation.config.Config;
@@ -27,17 +28,18 @@ public class PlayerDeathListener implements Listener {
     public void onPlayerDeath(PlayerDeathEvent event) {
         Player player = event.getEntity();
 
-        if (!inTheAllowedWorld(player.getWorld()))
+        if (!inTheAllowedWorld(player.getWorld()) || !PEUtil.isOnline(player))
             return;
 
         Location loc = player.getLocation();
-        List<Player> recipients = player.getWorld().getPlayers().stream().filter(recipient -> {
+        List<Player> bukkitRecipients = player.getWorld().getPlayers().stream().filter(recipient -> {
             double distance = player.getLocation().distance(recipient.getLocation());
             return recipient != player && distance <= config.getMaxDistanceToEntity();
         }).toList();
-
+        List<User> recipients = PEUtil.getUsers(bukkitRecipients);
         int entityId = ++nextEntityId;
         UUID uuid = UUID.randomUUID();
+
         PEUtil.spawnFakePlayer(recipients, player, uuid, entityId, loc.getX(), loc.getY(), loc.getZ(), loc.getYaw(), loc.getPitch());
         if (config.isCopyEntityEquipment())
             PEUtil.sendEquipmentPacket(recipients, player, entityId);
